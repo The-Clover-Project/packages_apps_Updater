@@ -21,7 +21,7 @@
           {type} - Build type
           {incr} - Incremental version
     -->
-    <string name="updater_server_url" translatable="false">https://raw.githubusercontent.com/The-Clover-Project/official_updates/15/devices/{device}.json</string>
+    <string name="updater_server_url" translatable="false">https://raw.githubusercontent.com/The-Clover-Project/official_updates/16/devices/{device}.json</string>
 
     <string name="verification_failed_notification">Verification failed</string>
     <string name="verifying_download_notification">Verifying update</string>
@@ -73,7 +73,7 @@
     <string name="menu_copy_url">Copy URL</string>
     <string name="menu_export_update">Export update</string>
     <string name="menu_show_changelog">Show changelog</string>
-    <string name="menu_changelog_url" translatable="false">https://raw.githubusercontent.com/The-Clover-Project/official_updates/15/changelogs/changelog_<xliff:g id="device_name">%1$s</xliff:g>.txt</string>
+    <string name="menu_changelog_url" translatable="false">https://raw.githubusercontent.com/The-Clover-Project/official_updates/16/changelogs/changelog_<xliff:g id="device_name">%1$s</xliff:g>.txt</string>
     <string name="menu_ab_perf_mode">Prioritize update process</string>
     <string name="menu_update_recovery">Update recovery</string>
     <string name="toast_forced_update_recovery">It is impossible to disable Clover Recovery updates on this device.</string>
@@ -145,7 +145,7 @@
 
     <string name="blocked_update_dialog_title">Update blocked</string>
     <string name="blocked_update_dialog_message">This update cannot be installed using the updater app.  Please read <xliff:g id="info_url">%1$s</xliff:g> for more information.</string>
-    <string name="blocked_update_info_url" translatable="false">https://github.com/The-Clover-Project/official_updates/tree/15/devices/<xliff:g id="device_name">%1$s</xliff:g>/upgrade/</string>
+    <string name="blocked_update_info_url" translatable="false">https://github.com/The-Clover-Project/official_updates/tree/16/devices/<xliff:g id="device_name">%1$s</xliff:g>/upgrade/</string>
 
     <string name="export_channel_title">Export completion</string>
     <string name="new_updates_channel_title">New updates</string>
