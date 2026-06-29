@@ -31,6 +31,7 @@ import com.clover.updater.data.UserPreferencesRepository;
 import com.clover.updater.misc.Utils;
 import com.clover.updater.notifications.NotificationHelper;
 import com.clover.updater.util.InstallUtils;
+import com.clover.updater.util.OtaMetadataParser;
 import com.clover.updater.util.StringUtil;
 
 import java.io.IOException;
@@ -198,7 +199,7 @@ public class UpdaterService extends Service {
                 throw new IllegalArgumentException(update.getDownloadId() + " is not verified");
             }
             try {
-                if (canStreamUpdate || Utils.isABUpdate(update.getFile())) {
+                if (canStreamUpdate || new OtaMetadataParser(update.getFile()).isABUpdate()) {
                     ABUpdateInstaller installer = ABUpdateInstaller.getInstance(this,
                             mUpdaterController, mUserPreferencesRepository);
                     if (canStreamUpdate) {
