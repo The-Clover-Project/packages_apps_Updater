@@ -35,7 +35,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -212,7 +211,6 @@ fun UpdaterCard(
          * Brand guide: "Roboto Light version text, spaced in 8%".
          */
         displayLarge.copy(
-            fontFamily = FontFamily.SansSerif,
             fontWeight = FontWeight.Light,
             letterSpacing = (-0.08).em,
             lineHeight = displayLarge.fontSize,
@@ -347,7 +345,7 @@ private fun InfoColumn(
 @UiModePreviews
 @Composable
 private fun UpdaterCardPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         UpdaterCard(
             buildVersion = "4.0",
             androidVersion = "17",

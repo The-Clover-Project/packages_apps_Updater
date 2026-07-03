@@ -113,7 +113,7 @@ sealed interface ActionBarButton {
 @UiModePreviews
 @Composable
 private fun ActionBarDownloadPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         ActionBar(
             buttons = listOf(
                 ActionBarButton.Tonal(text = "Download") {},
@@ -128,7 +128,7 @@ private fun ActionBarDownloadPreview() {
 @UiModePreviews
 @Composable
 private fun ActionBarDownloadingPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         ActionBar(
             buttons = listOf(
                 ActionBarButton.Icon(
@@ -147,7 +147,7 @@ private fun ActionBarDownloadingPreview() {
 @UiModePreviews
 @Composable
 private fun ActionBarPausedPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         ActionBar(
             buttons = listOf(
                 ActionBarButton.Icon(
@@ -167,7 +167,7 @@ private fun ActionBarPausedPreview() {
 @UiModePreviews
 @Composable
 private fun ActionBarInstallPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         ActionBar(
             buttons = listOf(
                 ActionBarButton.Tonal(text = "Install") {},

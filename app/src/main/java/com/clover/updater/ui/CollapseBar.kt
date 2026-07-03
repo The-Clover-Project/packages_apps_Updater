@@ -84,7 +84,7 @@ fun CollapseBar(
 @UiModePreviews
 @Composable
 private fun CollapseBarCollapsedPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         CollapseBar(
             expanded = false,
             hiddenItemCount = 3,
@@ -96,7 +96,7 @@ private fun CollapseBarCollapsedPreview() {
 @UiModePreviews
 @Composable
 private fun CollapseBarExpandedPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         CollapseBar(
             expanded = true,
             hiddenItemCount = 3,

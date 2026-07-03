@@ -107,7 +107,7 @@ fun DeviceInfoBanner(
 @UiModePreviews
 @Composable
 private fun DeviceInfoBannerPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         DeviceInfoBanner(
             buildVersion = "4.0",
             androidVersion = "17",

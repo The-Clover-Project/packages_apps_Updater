@@ -76,7 +76,7 @@ abstract class UpdatesScaffoldActivity : ComponentActivity() {
             }
 
             CompositionLocalProvider(LocalNavController provides navController) {
-                SettingsTheme {
+                com.clover.updater.theme.UpdaterTheme {
                     val uiState by viewModel.uiState.collectAsState()
                     UpdatesScaffoldContent(
                         uiState = uiState,

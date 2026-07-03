@@ -28,7 +28,7 @@ class PreferencesActivity : ComponentActivity() {
                 }
             }
             CompositionLocalProvider(LocalNavController provides navController) {
-                SettingsTheme {
+                com.clover.updater.theme.UpdaterTheme {
                     PreferencesScreen()
                 }
             }

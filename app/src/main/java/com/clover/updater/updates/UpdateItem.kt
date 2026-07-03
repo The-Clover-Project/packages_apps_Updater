@@ -243,7 +243,7 @@ private fun UpdateAction.toActionBarButton(
 @UiModePreviews
 @Composable
 private fun UpdateItemIdleCollapsedPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         UpdateItem(
             state = UpdateItemState(
                 downloadId = "preview",
@@ -276,7 +276,7 @@ private fun UpdateItemIdleCollapsedPreview() {
 @UiModePreviews
 @Composable
 private fun UpdateItemIdleExpandedPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         UpdateItem(
             state = UpdateItemState(
                 downloadId = "preview",
@@ -309,7 +309,7 @@ private fun UpdateItemIdleExpandedPreview() {
 @UiModePreviews
 @Composable
 private fun UpdateItemDownloadingPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         UpdateItem(
             state = UpdateItemState(
                 downloadId = "preview",

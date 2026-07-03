@@ -44,7 +44,7 @@ fun DeviceInfoTvAction(modifier: Modifier = Modifier) {
 @UiModePreviews
 @Composable
 private fun DeviceInfoTvActionPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         DeviceInfoTvAction()
     }
 }

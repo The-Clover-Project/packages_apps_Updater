@@ -66,7 +66,7 @@ fun DeviceInfoActionButtons(modifier: Modifier = Modifier) {
 @UiModePreviews
 @Composable
 private fun DeviceInfoActionButtonsPreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         DeviceInfoActionButtons(
             modifier = Modifier.padding(SettingsDimension.itemPadding),
         )

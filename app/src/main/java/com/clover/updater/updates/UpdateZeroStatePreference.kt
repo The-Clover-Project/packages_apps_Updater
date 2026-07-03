@@ -81,7 +81,7 @@ fun UpdateZeroStatePreference(
 @UiModePreviews
 @Composable
 private fun UpdateZeroStatePreferencePreview() {
-    SettingsTheme {
+    com.clover.updater.theme.UpdaterTheme {
         UpdateZeroStatePreference(
             text = "No updates available",
             description = "New builds for this device will appear here when available.",
