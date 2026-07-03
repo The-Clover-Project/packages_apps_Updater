@@ -45,4 +45,4 @@ androidx-room = { id = "androidx.room", version.ref = "room" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-lineageos-generatebp = { id = "org.lineageos.generatebp", version.ref = "generateBp" }
+clover-generatebp = { id = "com.clover.generatebp", version.ref = "generateBp" }

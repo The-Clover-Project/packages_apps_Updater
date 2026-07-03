@@ -11,8 +11,7 @@ Simple application to download and apply OTA packages.
 Server requirements
 -------------------
 The app sends `GET` requests to the URL defined by the `updater_server_url`
-resource (or the `lineage.updater.uri` system property) and expects as response
-a JSON with the following structure:
+resource and expects as response a JSON with the following structure:
 ```json
 [
   {
@@ -28,8 +27,8 @@ a JSON with the following structure:
         "url": "https://example.com/full/ota-package.zip"
       }
     ],
-    "type": "nightly",
-    "version": "23.2"
+    "type": "official",
+    "version": "4.0"
   }
 ]
 
@@ -43,8 +42,8 @@ The `files[0].ota_property_files` optional attribute is the `ota-property-files`
 The `files[0].sha256` attribute is a sha256 of the OTA update.  
 The `files[0].size` attribute is the size of the update expressed in bytes.  
 The `files[0].url` attribute is the URL of the file to be downloaded.  
-The `type` attribute is the string to be compared with the `ro.lineage.releasetype` property.  
-The `version` attribute is the string to be compared with the `ro.lineage.build.version` property.  
+The `type` attribute is the string to be compared with the `ro.clover.releasetype` property.  
+The `version` attribute is the string to be compared with the `ro.clover.build.version` property.  
 
 Additional attributes are ignored.
 

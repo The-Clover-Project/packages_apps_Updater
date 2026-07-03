@@ -71,7 +71,7 @@
     <string name="snack_download_verification_failed">Preverjanje posodobitve je spodletelo.</string>
     <string name="snack_download_verified">Prenos končan.</string>
     <string name="snack_update_not_installable">Te posodobitve ni mogoče namestiti preko trenutne izgradnje.</string>
-    <string name="header_android_version">Android <xliff:g id="version" example="16">%1$s</xliff:g></string>
+    <string name="header_android_version">Android <xliff:g id="version" example="17">%1$s</xliff:g></string>
     <string name="build_date">Datum izgradnje</string>
     <string name="security_update">Varnostna posodobitev</string>
     <string name="show_changelog">Nedavne spremembe</string>

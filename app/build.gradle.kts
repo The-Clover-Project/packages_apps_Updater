@@ -5,15 +5,15 @@
 
 import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.lineageos.generatebp.GenerateBpPluginExtension
-import org.lineageos.generatebp.models.Module
+import com.clover.generatebp.GenerateBpPluginExtension
+import com.clover.generatebp.models.Module
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.androidx.room)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.lineageos.generatebp)
+    alias(libs.plugins.clover.generatebp)
 }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -27,7 +27,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "org.lineageos.updater"
+        applicationId = "com.clover.updater"
         minSdk = 34
         targetSdk = 34
         versionCode = 1
@@ -82,7 +82,7 @@ android {
             }
         }
     }
-    namespace = "org.lineageos.updater"
+    namespace = "com.clover.updater"
 }
 
 room {

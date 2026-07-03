@@ -71,7 +71,7 @@
     <string name="snack_download_verification_failed">يېڭىلاشنى دەلىللىيەلمىدى.</string>
     <string name="snack_download_verified">چۈشۈرۈش تامام.</string>
     <string name="snack_update_not_installable">بۇ يېڭىلاشنى نۆۋەتتىكى نەشرىنىڭ ئۈستىگە ئورناتقىلى بولمايدۇ.</string>
-    <string name="header_android_version">Android <xliff:g id="version" example="16">%1$s</xliff:g></string>
+    <string name="header_android_version">Android <xliff:g id="version" example="17">%1$s</xliff:g></string>
     <string name="build_date">ھاسىللىغان چېسلا</string>
     <string name="security_update">بىخەتەرلىك يېڭىلانمىسى</string>
     <string name="show_changelog">يېقىنقى ئۆزگىرىش</string>

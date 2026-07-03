@@ -71,7 +71,7 @@
     <string name="snack_download_verification_failed">Theip ar fhíorú an nuashonraithe.</string>
     <string name="snack_download_verified">Íoslódáil críochnaithe.</string>
     <string name="snack_update_not_installable">Ní féidir an nuashonrú seo a shuiteáil ar bharr an leagan reatha.</string>
-    <string name="header_android_version">Android <xliff:g id="version" example="16">%1$s</xliff:g></string>
+    <string name="header_android_version">Android <xliff:g id="version" example="17">%1$s</xliff:g></string>
     <string name="build_date">Dáta tógála</string>
     <string name="security_update">Nuashonrú slándála</string>
     <string name="show_changelog">Athruithe le déanaí</string>

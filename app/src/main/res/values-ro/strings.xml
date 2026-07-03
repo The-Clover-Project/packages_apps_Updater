@@ -71,7 +71,7 @@
     <string name="snack_download_verification_failed">Verificarea actualizării a eșuat.</string>
     <string name="snack_download_verified">Descărcare terminată.</string>
     <string name="snack_update_not_installable">Această actualizare nu poate fi instalată pe build-ul curent.</string>
-    <string name="header_android_version">Android <xliff:g id="version" example="16">%1$s</xliff:g></string>
+    <string name="header_android_version">Android <xliff:g id="version" example="17">%1$s</xliff:g></string>
     <string name="build_date">Dată de compilare</string>
     <string name="security_update">Actualizare de securitate</string>
     <string name="show_changelog">Schimbări recente</string>

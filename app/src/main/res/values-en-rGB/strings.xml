@@ -71,7 +71,7 @@
     <string name="snack_download_verification_failed">The update verification failed.</string>
     <string name="snack_download_verified">Download completed.</string>
     <string name="snack_update_not_installable">This update can\'t be installed on top of the current build.</string>
-    <string name="header_android_version">Android <xliff:g id="version" example="16">%1$s</xliff:g></string>
+    <string name="header_android_version">Android <xliff:g id="version" example="17">%1$s</xliff:g></string>
     <string name="build_date">Build date</string>
     <string name="security_update">Security update</string>
     <string name="show_changelog">Recent changes</string>

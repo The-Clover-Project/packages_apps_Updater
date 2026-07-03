@@ -70,7 +70,7 @@
     <string name="snack_download_verification_failed">אימות העדכון נכשל.</string>
     <string name="snack_download_verified">ההורדה הושלמה.</string>
     <string name="snack_update_not_installable">אין אפשרות להתקין עדכון זה מהגרסה הקיימת.</string>
-    <string name="header_android_version">אנדרואיד <xliff:g id="version" example="16">%1$s</xliff:g></string>
+    <string name="header_android_version">אנדרואיד <xliff:g id="version" example="17">%1$s</xliff:g></string>
     <string name="build_date">תאריך בנייה</string>
     <string name="security_update">עדכון אבטחה</string>
     <string name="show_changelog">שינויים אחרונים</string>

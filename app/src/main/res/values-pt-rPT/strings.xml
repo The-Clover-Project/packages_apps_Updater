@@ -71,7 +71,7 @@
     <string name="snack_download_verification_failed">A verificação da atualização falhou.</string>
     <string name="snack_download_verified">Transferência concluída.</string>
     <string name="snack_update_not_installable">Esta atualização não pode ser instalada por cima da compilação atual.</string>
-    <string name="header_android_version">Android <xliff:g id="version" example="16">%1$s</xliff:g></string>
+    <string name="header_android_version">Android <xliff:g id="version" example="17">%1$s</xliff:g></string>
     <string name="build_date">Data de compilação</string>
     <string name="security_update">Atualização de segurança</string>
     <string name="show_changelog">Alterações recentes</string>
