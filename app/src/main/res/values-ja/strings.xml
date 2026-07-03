@@ -75,9 +75,7 @@
     <string name="build_date">ビルド日時</string>
     <string name="security_update">セキュリティアップデート</string>
     <string name="show_changelog">最新の変更点</string>
-    <string name="report_issues">問題を報告する</string>
     <string name="header_review_updates">アップデートと最新の変更点を確認する</string>
-    <string name="found_bug">バグを見つけましたか？バグレポートガイドの通りに報告してください：</string>
     <string name="updates_zero_state_title">アップデートはありません</string>
     <string name="updates_zero_state_description">利用可能な場合、このデバイスの新しいビルドがここに表示されます。</string>
     <string name="list_build_version">Clover <xliff:g id="version" example="14.1">%1$s</xliff:g></string>

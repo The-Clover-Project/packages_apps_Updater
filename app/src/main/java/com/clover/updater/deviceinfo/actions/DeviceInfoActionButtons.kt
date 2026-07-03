@@ -60,16 +60,6 @@ fun DeviceInfoActionButtons(modifier: Modifier = Modifier) {
         ) {
             Text(text = stringResource(R.string.show_changelog))
         }
-        TextButton(
-            onClick = {
-                val url = context.getString(R.string.report_issue_url)
-                val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-                context.startActivity(intent)
-            },
-            colors = buttonColors,
-        ) {
-            Text(text = stringResource(R.string.report_issues))
-        }
     }
 }
 

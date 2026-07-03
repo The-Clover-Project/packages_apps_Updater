@@ -60,7 +60,6 @@
     <string name="snack_update_not_installable">Þessa uppfærslu er ekki gægt að setja upp á þessari byggingarútgáfu.</string>
     <string name="show_changelog">Nýlegar breytingar</string>
     <string name="header_review_updates">Yfirfara uppfærslur og nýlegar breytingar á</string>
-    <string name="found_bug">Fannstu galla? Tilkynntu hann með leiðarvísi villutilkynninga:</string>
     <string name="updates_zero_state_title">Engar uppfærslur tiltækar</string>
     <string name="updates_zero_state_description">Nýjar byggingarútgáfur fyrir þetta tæki munu birtast hér þegar þær verða tiltækar.</string>
     <string name="list_build_version">Clover <xliff:g id="version" example="14.1">%1$s</xliff:g></string>

@@ -38,10 +38,6 @@ fun DeviceInfoTvAction(modifier: Modifier = Modifier) {
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.height(SettingsDimension.paddingLarge))
-        SettingsBody(stringResource(R.string.found_bug))
-        Spacer(modifier = Modifier.height(SettingsDimension.paddingLarge))
-        QrCodeReportIssues()
     }
 }
 

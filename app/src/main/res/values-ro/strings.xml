@@ -75,9 +75,7 @@
     <string name="build_date">Dată de compilare</string>
     <string name="security_update">Actualizare de securitate</string>
     <string name="show_changelog">Schimbări recente</string>
-    <string name="report_issues">Raportează o problemă</string>
     <string name="header_review_updates">Revizuiți actualizările și modificările recente la</string>
-    <string name="found_bug">Ați găsit un bug? Raportați-l cu ghidul nostru de raportare a erorilor:</string>
     <string name="updates_zero_state_title">Nu există actualizări disponibile</string>
     <string name="updates_zero_state_description">Noi build-uri pentru acest dispozitiv vor apărea aici atunci când vor fi disponibile.</string>
     <string name="list_build_version">Clover <xliff:g id="version" example="14.1">%1$s</xliff:g></string>

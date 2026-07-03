@@ -75,9 +75,7 @@
     <string name="build_date">Dáta tógála</string>
     <string name="security_update">Nuashonrú slándála</string>
     <string name="show_changelog">Athruithe le déanaí</string>
-    <string name="report_issues">Tuairiscigh fadhbanna</string>
     <string name="header_review_updates">Athbhreithnigh nuashonruithe agus athruithe le déanaí ar</string>
-    <string name="found_bug">An bhfuair tú fabht? Tuairiscigh é lenár dtreoir tuairiscithe fabht:</string>
     <string name="updates_zero_state_title">Níl aon nuashonruithe ar fáil</string>
     <string name="updates_zero_state_description">Beidh leaganacha nua den fheiste seo le feiceáil anseo nuair a bheidh siad ar fáil.</string>
     <string name="list_build_version">Clover <xliff:g id="version" example="14.1">%1$s</xliff:g></string>

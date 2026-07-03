@@ -67,9 +67,7 @@
     <string name="build_date">Date de compilation</string>
     <string name="security_update">Mise à jour de sécurité</string>
     <string name="show_changelog">Modifications récentes</string>
-    <string name="report_issues">Signaler les bugs</string>
     <string name="header_review_updates">Vérifier les mises à jour et les modifications récentes sur</string>
-    <string name="found_bug">Vous avez trouvé un bug ? Signalez-le avec notre guide de rapport de bug :</string>
     <string name="updates_zero_state_title">Aucune mise à jour disponible</string>
     <string name="updates_zero_state_description">Les nouvelles versions pour cet appareil apparaîtront ici quand elles seront disponibles.</string>
     <string name="list_build_version">Clover <xliff:g id="version" example="14.1">%1$s</xliff:g></string>

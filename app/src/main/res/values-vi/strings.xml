@@ -75,9 +75,7 @@
     <string name="build_date">Ngày dựng</string>
     <string name="security_update">Cập nhật bảo mật</string>
     <string name="show_changelog">Thay đổi gần đây</string>
-    <string name="report_issues">Báo cáo sự cố</string>
     <string name="header_review_updates">Xem lại các bản cập nhật và thay đổi gần đây trên</string>
-    <string name="found_bug">Phát hiện lỗi? Hãy báo cáo lỗi bằng hướng dẫn báo cáo lỗi của chúng tôi:</string>
     <string name="updates_zero_state_title">Không có bản cập nhật nào</string>
     <string name="updates_zero_state_description">Các bản cập nhật mới cho thiết bị này sẽ xuất hiện ở đây khi có sẵn.</string>
     <string name="list_build_version">Clover <xliff:g id="version" example="14.1">%1$s</xliff:g></string>

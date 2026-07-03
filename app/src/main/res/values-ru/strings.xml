@@ -75,9 +75,7 @@
     <string name="build_date">Дата сборки</string>
     <string name="security_update">Обновления безопасности</string>
     <string name="show_changelog">Последние изменения</string>
-    <string name="report_issues">Сообщить о проблемах</string>
     <string name="header_review_updates">Просмотр обновлений и последних изменений на</string>
-    <string name="found_bug">Нашли ошибку? Сообщите об этом с помощью нашего руководства по исправлению ошибок:</string>
     <string name="updates_zero_state_title">Обновления отсутствуют</string>
     <string name="updates_zero_state_description">Новые сборки для этого устройства будут появляться здесь, когда они станут доступны.</string>
     <string name="list_build_version">Clover <xliff:g id="version" example="14.1">%1$s</xliff:g></string>

@@ -75,9 +75,7 @@
     <string name="build_date">Datum izgradnje</string>
     <string name="security_update">Varnostna posodobitev</string>
     <string name="show_changelog">Nedavne spremembe</string>
-    <string name="report_issues">Prijavi težave</string>
     <string name="header_review_updates">Preglej posodobitve in nedavne spremembe na</string>
-    <string name="found_bug">Najdena napaka? Prijavite jo z našim vodičem za prijavo napake:</string>
     <string name="updates_zero_state_title">Ni razpoložljivih posodobitev</string>
     <string name="updates_zero_state_description">Nove izgradnje za to napravo se bodo pojavile tukaj, ko bodo na voljo.</string>
     <string name="list_build_version">Clover <xliff:g id="version" example="14.1">%1$s</xliff:g></string>

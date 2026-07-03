@@ -75,9 +75,7 @@
     <string name="build_date">Data de compilação</string>
     <string name="security_update">Atualização de segurança</string>
     <string name="show_changelog">Alterações recentes</string>
-    <string name="report_issues">Relatar problemas</string>
     <string name="header_review_updates">Revise as atualizações e as alterações recentes em</string>
-    <string name="found_bug">Encontrou um bug? Reporte com nosso guia de relatórios de bug:</string>
     <string name="updates_zero_state_title">Não há atualizações disponíveis</string>
     <string name="updates_zero_state_description">Novas compilações para este dispositivo aparecerão aqui quando disponíveis.</string>
     <string name="list_build_version">Clover <xliff:g id="version" example="14.1">%1$s</xliff:g></string>

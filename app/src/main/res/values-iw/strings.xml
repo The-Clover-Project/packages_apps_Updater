@@ -74,9 +74,7 @@
     <string name="build_date">תאריך בנייה</string>
     <string name="security_update">עדכון אבטחה</string>
     <string name="show_changelog">שינויים אחרונים</string>
-    <string name="report_issues">דיווח בעיה</string>
     <string name="header_review_updates">סקירת עדכונים ושינויים אחרונים ב</string>
-    <string name="found_bug">מצאת תקלה? כדאי לדווח עליו לפי מדריך הדיווח שלנו:</string>
     <string name="updates_zero_state_title">אין עדכונים זמינים</string>
     <string name="updates_zero_state_description">גרסאות חדשות עבור התקן זה יופיעו כאן כאשר יהיו זמינות.</string>
     <string name="list_build_version">Clover <xliff:g id="version" example="14.1">%1$s</xliff:g></string>
