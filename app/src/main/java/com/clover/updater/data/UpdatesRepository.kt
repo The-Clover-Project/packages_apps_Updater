@@ -14,7 +14,6 @@ import com.clover.updater.data.source.local.UpdatesLocalDataSource
 import com.clover.updater.data.source.network.UpdatesNetworkDataSource
 import com.clover.updater.data.source.network.toUpdate
 import com.clover.updater.deviceinfo.DeviceInfoUtils
-import com.clover.updater.misc.Utils
 import com.clover.updater.notifications.NotificationHelper
 import com.clover.updater.util.NetworkMonitor
 import java.io.IOException
@@ -92,12 +91,7 @@ class UpdatesRepository(
             return false
         }
 
-        if (!Utils.compareVersions(
-                update.version,
-                DeviceInfoUtils.buildVersion,
-                true, /* DeviceInfoUtils.isMajorUpdateAllowed */
-            )
-        ) {
+        if (update.osSdkLevel < DeviceInfoUtils.sdkLevel) {
             Log.d(TAG, "${update.name} is older than current Android version")
             return false
         }

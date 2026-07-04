@@ -7,7 +7,6 @@ package com.clover.updater.util
 
 import com.clover.updater.data.Update
 import com.clover.updater.deviceinfo.DeviceInfoUtils
-import com.clover.updater.misc.Utils
 import java.io.File
 
 object InstallUtils {
@@ -24,13 +23,12 @@ object InstallUtils {
 
     @JvmStatic
     fun getBlockedReason(update: Update) = when {
-        !DeviceInfoUtils.isDowngradingAllowed
-                && update.timestamp <= DeviceInfoUtils.buildDateTimestamp
-            -> BlockedReason.DOWNGRADE
+        !DeviceInfoUtils.isDowngradingAllowed &&
+                (update.timestamp < DeviceInfoUtils.buildDateTimestamp ||
+                        update.osSdkLevel < DeviceInfoUtils.sdkLevel) -> BlockedReason.DOWNGRADE
 
-        !Utils.compareVersions(
-            update.version, DeviceInfoUtils.buildVersion, DeviceInfoUtils.isMajorUpdateAllowed
-        ) -> BlockedReason.VERSION_UNSUPPORTED
+        !DeviceInfoUtils.isMajorUpdateAllowed &&
+                update.osSdkLevel > DeviceInfoUtils.sdkLevel -> BlockedReason.VERSION_UNSUPPORTED
 
         else -> BlockedReason.NONE
     }

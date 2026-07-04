@@ -12,6 +12,7 @@ import com.clover.updater.R
 import com.clover.updater.controller.UpdaterController
 import com.clover.updater.data.Update
 import com.clover.updater.data.UpdateStatus
+import com.clover.updater.deviceinfo.DeviceInfoUtils
 import com.clover.updater.updates.action.UpdateAction
 import com.clover.updater.updates.action.UpdateActionType
 import com.clover.updater.updates.action.UpdateActions
@@ -175,10 +176,9 @@ class UpdateItemStateMapper(
             status = state.titleRes?.let { context.getString(it) } ?: "",
             fileSize = Formatter.formatShortFileSize(context, update.fileSize),
             androidUpdateInfo = when {
-                update.osSdkLevel == null -> ""
-                update.osSdkLevel > Build.VERSION.SDK_INT ->
+                update.osSdkLevel > DeviceInfoUtils.sdkLevel ->
                     context.getString(R.string.list_major_android_upgrade)
-                update.osSdkLevel == Build.VERSION.SDK_INT ->
+                update.osSdkLevel == DeviceInfoUtils.sdkLevel ->
                     context.getString(
                         R.string.header_android_version,
                         Build.VERSION.RELEASE_OR_PREVIEW_DISPLAY,
