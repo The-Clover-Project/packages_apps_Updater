@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Color
@@ -244,13 +245,13 @@ fun UpdaterCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(SettingsDimension.paddingLarge),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Image(
                         painter = painterResource(R.drawable.clover_branding),
                         contentDescription = stringResource(R.string.brand_name),
                         modifier = Modifier
-                            .width(markWidth)
-                            .alignBy { it.measuredHeight },
+                            .width(markWidth),
                         contentScale = ContentScale.FillWidth,
                         // Brand guide: "Use white when on dark backgrounds".
                         colorFilter = ColorFilter.tint(onBrandColor),
@@ -261,7 +262,6 @@ fun UpdaterCard(
                     Text(
                         text = buildVersion,
                         style = versionStyle,
-                        modifier = Modifier.alignByBaseline(),
                     )
                 }
 
