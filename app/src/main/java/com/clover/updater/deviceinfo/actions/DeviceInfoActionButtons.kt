@@ -37,26 +37,17 @@ fun DeviceInfoActionButtons(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(
-                CornerExtraLarge1.copy(
-                    topStart = CornerExtraSmall2.topStart,
-                    topEnd = CornerExtraSmall2.topEnd,
-                )
-            )
-            .background(MaterialTheme.colorScheme.surfaceBright)
+            .clip(CornerExtraLarge1)
+            .background(MaterialTheme.colorScheme.surfaceContainerLow)
             .padding(SettingsDimension.itemPaddingAround),
-        horizontalArrangement = Arrangement.spacedBy(small1),
+        horizontalArrangement = Arrangement.Center,
     ) {
-        val buttonColors = ButtonDefaults.textButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSurface,
-        )
-        TextButton(
+        androidx.compose.material3.FilledTonalButton(
             onClick = {
                 val url = context.getString(R.string.menu_changelog_url, DeviceInfoUtils.device)
                 val intent = Intent(Intent.ACTION_VIEW, url.toUri())
                 context.startActivity(intent)
             },
-            colors = buttonColors,
         ) {
             Text(text = stringResource(R.string.show_changelog))
         }

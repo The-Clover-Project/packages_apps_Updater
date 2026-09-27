@@ -43,7 +43,6 @@ import com.android.settingslib.spa.debug.UiModePreviews
 import com.android.settingslib.spa.framework.theme.SettingsDimension
 import com.android.settingslib.spa.framework.theme.SettingsShape.CornerExtraLarge1
 import com.android.settingslib.spa.framework.theme.SettingsSpace
-import com.android.settingslib.spa.framework.theme.SettingsTheme
 import com.clover.updater.R
 import kotlin.math.max
 import kotlin.math.roundToInt
@@ -244,7 +243,12 @@ fun UpdaterCard(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(SettingsDimension.paddingLarge),
+                        .padding(
+                            start = SettingsDimension.paddingLarge,
+                            end = SettingsDimension.paddingLarge,
+                            top = SettingsDimension.paddingExtraLarge,
+                            bottom = SettingsDimension.paddingLarge,
+                        ),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Image(
@@ -265,7 +269,12 @@ fun UpdaterCard(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(SettingsSpace.medium5))
+                Spacer(modifier = Modifier.height(SettingsSpace.small1))
+
+                androidx.compose.material3.HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = SettingsDimension.paddingLarge),
+                    color = onBrandColor.copy(alpha = 0.2f),
+                )
 
                 Row(
                     modifier = Modifier
@@ -274,19 +283,22 @@ fun UpdaterCard(
                             horizontal = SettingsDimension.paddingLarge,
                             vertical = SettingsDimension.paddingLarge,
                         ),
-                    horizontalArrangement = Arrangement.spacedBy(SettingsDimension.paddingLarge),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     InfoColumn(
                         label = stringResource(R.string.header_build_version, buildVersion),
                         value = stringResource(R.string.header_android_version, androidVersion),
+                        modifier = Modifier.weight(1f),
                     )
                     InfoColumn(
                         label = stringResource(R.string.build_date),
                         value = buildDate,
+                        modifier = Modifier.weight(1f),
                     )
                     InfoColumn(
                         label = stringResource(R.string.security_update),
                         value = securityPatch,
+                        modifier = Modifier.weight(1f),
                     )
                 }
             }
@@ -325,19 +337,20 @@ private fun Modifier.updaterHeaderPattern(
 private fun InfoColumn(
     label: String,
     value: String,
+    modifier: Modifier = Modifier,
 ) {
     Column(
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(SettingsSpace.extraSmall2),
     ) {
         Text(
-            text = label,
-            style = MaterialTheme.typography.titleSmall.copy(
-                fontWeight = FontWeight.Normal,
-            ),
+            text = value,
+            style = MaterialTheme.typography.titleSmall,
         )
         Text(
-            text = value,
-            style = MaterialTheme.typography.bodyLarge,
+            text = label,
+            style = MaterialTheme.typography.bodySmall,
+            color = androidx.compose.material3.LocalContentColor.current.copy(alpha = 0.7f),
         )
     }
 }

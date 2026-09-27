@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -26,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import com.android.settingslib.spa.debug.UiModePreviews
 import com.android.settingslib.spa.framework.theme.SettingsDimension
 import com.android.settingslib.spa.framework.theme.SettingsSpace
@@ -43,15 +45,18 @@ fun ActionBar(
         modifier = Modifier
             .fillMaxWidth()
             .padding(SettingsDimension.buttonPadding),
-        horizontalArrangement = Arrangement.spacedBy(SettingsSpace.extraSmall2),
+        horizontalArrangement = Arrangement.spacedBy(SettingsSpace.small1),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        val buttonModifier = Modifier.height(40.dp)
+
         buttons.forEach { button ->
             when (button) {
                 is ActionBarButton.Tonal -> FilledTonalButton(
                     onClick = button.onClick,
                     shapes = ButtonDefaults.shapes(),
                     enabled = button.enabled,
+                    modifier = buttonModifier,
                 ) {
                     Text(button.text)
                 }
@@ -60,6 +65,7 @@ fun ActionBar(
                     onClick = button.onClick,
                     shapes = ButtonDefaults.shapes(),
                     enabled = button.enabled,
+                    modifier = buttonModifier,
                 ) {
                     Text(button.text)
                 }
@@ -68,6 +74,7 @@ fun ActionBar(
                     onClick = button.onClick,
                     shapes = IconButtonDefaults.shapes(),
                     enabled = button.enabled,
+                    modifier = buttonModifier,
                 ) {
                     Icon(
                         imageVector = button.imageVector,

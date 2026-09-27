@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -22,9 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.android.settingslib.spa.debug.UiModePreviews
 import com.android.settingslib.spa.framework.theme.SettingsDimension
-import com.android.settingslib.spa.framework.theme.SettingsRadius
 import com.android.settingslib.spa.framework.theme.SettingsShape.CornerExtraLarge1
-import com.android.settingslib.spa.framework.theme.SettingsTheme
 import com.clover.updater.deviceinfo.actions.DeviceInfoActionButtons
 import com.clover.updater.deviceinfo.actions.DeviceInfoTvAction
 import com.clover.updater.util.StringUtil
@@ -77,14 +74,7 @@ fun DeviceInfoBanner(
             buildDate = buildDate,
             securityPatch = securityPatch,
             modifier = Modifier.fillMaxWidth(),
-            shape = if (isTv) {
-                CornerExtraLarge1
-            } else {
-                CornerExtraLarge1.copy(
-                    bottomStart = CornerSize(SettingsRadius.extraSmall2),
-                    bottomEnd = CornerSize(SettingsRadius.extraSmall2),
-                )
-            },
+            shape = CornerExtraLarge1,
         )
 
         if (!isTv) {

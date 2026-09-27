@@ -8,13 +8,22 @@ package com.clover.updater.updates
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Archive
 import androidx.compose.material.icons.outlined.CloudDownload
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
+import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material.icons.outlined.Pause
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -24,23 +33,25 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.key
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
 import com.android.settingslib.spa.debug.UiModePreviews
 import com.android.settingslib.spa.framework.theme.SettingsDimension
 import com.android.settingslib.spa.framework.theme.SettingsShape
 import com.android.settingslib.spa.framework.theme.SettingsSpace
 import com.android.settingslib.spa.framework.theme.SettingsTheme
-import com.android.settingslib.spa.widget.preference.Preference
-import com.android.settingslib.spa.widget.preference.PreferenceModel
 import com.android.settingslib.spa.widget.ui.LinearProgressBar
 import com.clover.updater.R
 import com.clover.updater.updates.action.UpdateAction
@@ -61,151 +72,172 @@ fun UpdateItem(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    Column(
+    Surface(
         modifier = modifier
             .fillMaxWidth()
             .clip(SettingsShape.CornerExtraSmall2)
-            .background(MaterialTheme.colorScheme.surfaceBright)
+            .clickable(
+                enabled = onExpandToggle != null,
+                onClick = { onExpandToggle?.invoke() }
+            ),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        shape = SettingsShape.CornerExtraSmall2
     ) {
-        key(state.downloadId) {
-            Preference(model = object : PreferenceModel {
-                override val title = state.buildDate
-                override val summary = {
-                    buildString {
-                        append(state.buildVersion)
-                        if (state.status.isNotEmpty()) {
-                            append(" • ")
-                            append(state.status)
-                        }
-                    }
-                }
-                override val onClick = onExpandToggle
-                override val icon = if (!expanded) {
-                    @Composable {
-                        if (state.isLocal) {
-                            Icon(
-                                imageVector = Icons.Outlined.Archive,
-                                contentDescription = null,
-                            )
-                        } else {
-                            Icon(
-                                imageVector = Icons.Outlined.CloudDownload,
-                                contentDescription = null,
-                            )
-                        }
-                    }
-                } else {
-                    null
-                }
-            })
-        }
-
-        AnimatedVisibility(visible = expanded) {
-            Column {
-                Column(
-                    modifier = Modifier.padding(horizontal = SettingsDimension.itemPaddingStart),
+        Column {
+            key(state.downloadId) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(SettingsDimension.itemPadding),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    CompositionLocalProvider(
-                        LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant,
-                        LocalTextStyle provides MaterialTheme.typography.bodySmall,
+                    if (!expanded) {
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .background(
+                                    color = MaterialTheme.colorScheme.primaryContainer,
+                                    shape = CircleShape
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = if (state.isLocal) Icons.Outlined.Archive else Icons.Outlined.CloudDownload,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(SettingsSpace.medium1))
+                    }
+                    
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = state.buildDate,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        val summary = buildString {
+                            append(state.buildVersion)
+                            if (state.status.isNotEmpty()) {
+                                append(" • ")
+                                append(state.status)
+                            }
+                        }
+                        Text(
+                            text = summary,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    
+                    Icon(
+                        imageVector = if (expanded) Icons.Outlined.KeyboardArrowUp else Icons.Outlined.KeyboardArrowDown,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+
+            AnimatedVisibility(visible = expanded) {
+                Column {
+                    Column(
+                        modifier = Modifier.padding(horizontal = SettingsDimension.itemPaddingStart),
                     ) {
-                        when (val progress = state.progress) {
-                            is ProgressState.Determinate -> {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                ) {
+                        CompositionLocalProvider(
+                            LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant,
+                            LocalTextStyle provides MaterialTheme.typography.bodySmall,
+                        ) {
+                            when (val progress = state.progress) {
+                                is ProgressState.Determinate -> {
                                     Text(
                                         text = buildAnnotatedString {
-                                            withStyle(MaterialTheme.typography.titleLarge.toSpanStyle()) {
+                                            withStyle(
+                                                MaterialTheme.typography.headlineMedium.toSpanStyle().copy(fontWeight = FontWeight.Bold)
+                                            ) {
                                                 append(progress.percent.toInt().toString())
                                             }
                                             append("%")
-                                        },
-                                        modifier = Modifier.alignByBaseline(),
+                                        }
                                     )
-
-                                    if (progress.downloadedSize.isNotEmpty()) {
+                                    val secondaryText = buildString {
+                                        if (progress.downloadedSize.isNotEmpty()) append(progress.downloadedSize)
+                                        if (progress.downloadedSize.isNotEmpty() && progress.eta.isNotEmpty()) append(" • ")
+                                        if (progress.eta.isNotEmpty()) append(progress.eta)
+                                    }
+                                    if (secondaryText.isNotEmpty()) {
                                         Text(
-                                            text = " · ${progress.downloadedSize}",
-                                            modifier = Modifier
-                                                .weight(1f)
-                                                .alignByBaseline(),
+                                            text = secondaryText,
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
                                         )
                                     }
+                                    Spacer(modifier = Modifier.height(SettingsSpace.small1))
+                                    LinearProgressBar(progress = progress.percent / 100f)
+                                }
 
-                                    if (progress.eta.isNotEmpty()) {
+                                ProgressState.Indeterminate -> {
+                                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                                }
+
+                                null -> {
+                                    Text(text = stringResource(R.string.list_update_size, state.fileSize))
+                                    if (state.androidUpdateInfo.isNotEmpty()) {
+                                        Text(text = state.androidUpdateInfo)
+                                    }
+                                    if (state.securityUpdate.isNotEmpty()) {
                                         Text(
-                                            text = progress.eta,
-                                            modifier = Modifier.alignByBaseline(),
+                                            text = stringResource(
+                                                R.string.list_security_update,
+                                                state.securityUpdate,
+                                            )
                                         )
                                     }
-                                }
-                                LinearProgressBar(progress = progress.percent / 100f)
-                            }
-
-                            ProgressState.Indeterminate -> {
-                                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                            }
-
-                            null -> {
-                                Text(text = stringResource(R.string.list_update_size, state.fileSize))
-                                if (state.androidUpdateInfo.isNotEmpty()) {
-                                    Text(text = state.androidUpdateInfo)
-                                }
-                                if (state.securityUpdate.isNotEmpty()) {
+                                    HorizontalDivider(
+                                        modifier = Modifier.padding(
+                                            top = SettingsSpace.small1,
+                                            bottom = SettingsSpace.extraSmall4,
+                                        )
+                                    )
                                     Text(
-                                        text = stringResource(
-                                            R.string.list_security_update,
-                                            state.securityUpdate,
-                                        )
+                                        text = if (state.installNote == R.string.list_major_upgrade_recovery_install) {
+                                            stringResource(
+                                                state.installNote,
+                                                stringResource(R.string.brand_name),
+                                            )
+                                        } else {
+                                            stringResource(state.installNote)
+                                        },
+                                        style = MaterialTheme.typography.bodySmallEmphasized,
                                     )
                                 }
-                                HorizontalDivider(
-                                    modifier = Modifier.padding(
-                                        top = SettingsSpace.small1,
-                                        bottom = SettingsSpace.extraSmall4,
-                                    )
-                                )
-                                Text(
-                                    text = if (state.installNote == R.string.list_major_upgrade_recovery_install) {
-                                        stringResource(
-                                            state.installNote,
-                                            stringResource(R.string.brand_name),
-                                        )
-                                    } else {
-                                        stringResource(state.installNote)
-                                    },
-                                    style = MaterialTheme.typography.bodySmallEmphasized,
-                                )
                             }
                         }
                     }
-                }
 
-                ActionBar(
-                    buttons = listOfNotNull(
-                        state.actions.primary.toActionBarButton(
-                            context,
-                            onAction,
-                            isPrimary = true
+                    ActionBar(
+                        buttons = listOfNotNull(
+                            state.actions.primary.toActionBarButton(
+                                context,
+                                onAction,
+                                isPrimary = true
+                            ),
+                            state.actions.secondary?.toActionBarButton(context, onAction),
                         ),
-                        state.actions.secondary?.toActionBarButton(context, onAction),
-                    ),
-                    menuContent = if (state.actions.overflow.isEmpty()) {
-                        null
-                    } else {
-                        {
-                            state.actions.overflow.forEach { action ->
-                                MenuItem(
-                                    text = action.type.title(context),
-                                    enabled = action.enabled,
-                                ) {
-                                    onAction(action)
+                        menuContent = if (state.actions.overflow.isEmpty()) {
+                            null
+                        } else {
+                            {
+                                state.actions.overflow.forEach { action ->
+                                    MenuItem(
+                                        text = action.type.title(context),
+                                        enabled = action.enabled,
+                                    ) {
+                                        onAction(action)
+                                    }
                                 }
                             }
-                        }
-                    },
-                )
+                        },
+                    )
+                }
             }
         }
     }

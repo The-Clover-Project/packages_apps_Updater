@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieConstants
 import com.android.settingslib.spa.framework.theme.SettingsDimension
+import com.android.settingslib.spa.framework.theme.SettingsSpace
 import com.android.settingslib.spa.widget.ui.SettingsBody
 import kotlinx.coroutines.delay
 import com.clover.updater.R
@@ -72,6 +74,7 @@ class UpdatesCheckUiState internal constructor(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun UpdatesCheck(
     model: UpdatesCheckModel,
@@ -89,7 +92,7 @@ fun UpdatesCheck(
             .fillMaxWidth()
             .padding(SettingsDimension.itemPadding),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(SettingsDimension.itemPaddingVertical),
+        verticalArrangement = Arrangement.spacedBy(SettingsSpace.small2),
     ) {
         when (uiState.displayedState) {
             UpdatesCheckState.Idle -> Unit
@@ -117,15 +120,15 @@ fun UpdatesCheck(
 
         Text(
             text = lastCheckedText,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(end = SettingsDimension.itemPaddingEnd),
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.End,
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center,
         )
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun CheckForUpdatesButton(
     onClick: () -> Unit,
@@ -133,7 +136,8 @@ private fun CheckForUpdatesButton(
 ) {
     FilledTonalButton(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
+        shapes = ButtonDefaults.shapes(),
         colors = ButtonDefaults.filledTonalButtonColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
         ),
@@ -154,7 +158,7 @@ private fun StatusContent(
     val text = stringResource(textResId)
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(SettingsDimension.itemPaddingVertical),
+        verticalArrangement = Arrangement.spacedBy(SettingsSpace.small1),
     ) {
         Lottie(
             resId = animationResId,

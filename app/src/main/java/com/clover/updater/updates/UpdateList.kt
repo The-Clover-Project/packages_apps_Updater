@@ -6,6 +6,7 @@
 package com.clover.updater.updates
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,6 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.android.settingslib.spa.framework.theme.SettingsSpace
 import com.android.settingslib.spa.widget.ui.Category
 import com.clover.updater.R
 import com.clover.updater.ui.CollapseBar
@@ -51,29 +53,33 @@ fun UpdateList(
 
     Column(modifier = modifier) {
         Category {
-            items.forEach { item ->
-                AnimatedVisibility(visible = item.downloadId in visibleItemIds) {
-                    val staysExpanded = item.progress != null
-                    val itemExpanded = staysExpanded || (item.downloadId in expandedItemIds)
-                    val onExpandToggle = if (staysExpanded) {
-                        null
-                    } else {
-                        {
-                            expandedItemIds =
-                                if (item.downloadId in expandedItemIds) {
-                                    expandedItemIds - item.downloadId
-                                } else {
-                                    expandedItemIds + item.downloadId
-                                }
+            Column(
+                verticalArrangement = Arrangement.spacedBy(SettingsSpace.small1)
+            ) {
+                items.forEach { item ->
+                    AnimatedVisibility(visible = item.downloadId in visibleItemIds) {
+                        val staysExpanded = item.progress != null
+                        val itemExpanded = staysExpanded || (item.downloadId in expandedItemIds)
+                        val onExpandToggle = if (staysExpanded) {
+                            null
+                        } else {
+                            {
+                                expandedItemIds =
+                                    if (item.downloadId in expandedItemIds) {
+                                        expandedItemIds - item.downloadId
+                                    } else {
+                                        expandedItemIds + item.downloadId
+                                    }
+                            }
                         }
-                    }
 
-                    UpdateItem(
-                        state = item,
-                        expanded = itemExpanded,
-                        onExpandToggle = onExpandToggle,
-                        onAction = { action -> onAction(action, item.downloadId) },
-                    )
+                        UpdateItem(
+                            state = item,
+                            expanded = itemExpanded,
+                            onExpandToggle = onExpandToggle,
+                            onAction = { action -> onAction(action, item.downloadId) },
+                        )
+                    }
                 }
             }
         }

@@ -39,7 +39,9 @@ fun UpdateZeroStatePreference(
     val colorScheme = MaterialTheme.colorScheme
 
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
@@ -55,7 +57,7 @@ fun UpdateZeroStatePreference(
                 end = SettingsSpace.medium5,
                 bottom = SettingsSpace.small1,
             ),
-            verticalArrangement = Arrangement.spacedBy(SettingsSpace.extraSmall2),
+            verticalArrangement = Arrangement.spacedBy(SettingsSpace.small1),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (text.isNotEmpty()) {
@@ -69,7 +71,7 @@ fun UpdateZeroStatePreference(
             if (description.isNotEmpty()) {
                 Text(
                     text = description,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyMedium,
                 )
