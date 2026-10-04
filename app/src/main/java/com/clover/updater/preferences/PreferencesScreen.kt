@@ -97,7 +97,7 @@ private fun PreferencesContent(
                     text = stringResource(R.string.time_unit_day),
                 ),
                 ListPreferenceOption(
-                    id = CheckInterval.DAILY.ordinal,
+                    id = CheckInterval.WEEKLY.ordinal,
                     text = stringResource(R.string.time_unit_week),
                 ),
                 ListPreferenceOption(
