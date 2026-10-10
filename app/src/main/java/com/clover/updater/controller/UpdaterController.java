@@ -18,7 +18,9 @@ import com.clover.updater.data.UserPreferencesRepository;
 import com.clover.updater.data.source.local.UpdatesLocalDataSource;
 import com.clover.updater.data.source.local.UpdatesDatabase;
 import com.clover.updater.download.DownloadClient;
+import com.clover.updater.download.DownloadState;
 import com.clover.updater.misc.Utils;
+import com.clover.updater.util.InstallUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -236,7 +238,7 @@ public class UpdaterController {
                 }
                 final long now = SystemClock.elapsedRealtime();
                 int progress = Math.round(bytesRead * 100f / contentLength);
-                if (progress != mProgress || mLastUpdate - now > MAX_REPORT_INTERVAL_MS) {
+                if (progress != mProgress || now - mLastUpdate > MAX_REPORT_INTERVAL_MS) {
                     mProgress = progress;
                     mLastUpdate = now;
                     synchronized (entry) {
@@ -291,6 +293,7 @@ public class UpdaterController {
             if (file.exists()) {
                 //noinspection ResultOfMethodCallIgnored
                 file.delete();
+                DownloadState.delete(file);
             } else {
                 // The download was probably stopped. Exit silently
                 Log.e(TAG, "Error while verifying the file", e);
@@ -372,8 +375,8 @@ public class UpdaterController {
                 builder.setProgress(0);
             } else if (updateInfo.getFileSize() > 0) {
                 builder.setStatus(UpdateStatus.PAUSED);
-                int progress = Math.round(
-                        updateInfo.getFile().length() * 100f / updateInfo.getFileSize());
+                int progress = Math.round(DownloadState.downloadedBytes(updateInfo.getFile())
+                        * 100f / updateInfo.getFileSize());
                 builder.setProgress(progress);
             }
 
@@ -401,6 +404,9 @@ public class UpdaterController {
             return;
         }
         Update update = entry.mUpdate;
+        if (isCleanFlashRequired(update)) {
+            return;
+        }
         File destination = new File(mDownloadRoot, update.getName());
         if (destination.exists()) {
             destination = Utils.appendSequentialNumber(destination);
@@ -442,6 +448,9 @@ public class UpdaterController {
             return;
         }
         Update update = entry.mUpdate;
+        if (isCleanFlashRequired(update)) {
+            return;
+        }
         File file = update.getFile();
         if (file == null || !file.exists()) {
             Log.e(TAG, "The destination file of " + downloadId + " doesn't exist, can't resume");
@@ -505,6 +514,7 @@ public class UpdaterController {
             if (file != null && file.exists() && !file.delete()) {
                 Log.e(TAG, "Could not delete " + file.getAbsolutePath());
             }
+            DownloadState.delete(file);
             mUpdatesLocalDataSource.removeUpdate(update.getDownloadId());
         }).start();
     }
@@ -640,5 +650,13 @@ public class UpdaterController {
     }
     public boolean isFullyDownloaded(Update update) {
         return update.hasFullyDownloadedPackage();
+    }
+
+    private boolean isCleanFlashRequired(Update update) {
+        if (InstallUtils.getBlockedReason(update) != InstallUtils.BlockedReason.CLEAN_FLASH_REQUIRED) {
+            return false;
+        }
+        Log.e(TAG, update.getDownloadId() + " needs a clean flash, not downloading");
+        return true;
     }
 }

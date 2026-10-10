@@ -91,7 +91,7 @@ class UpdatesViewModel(
                 )
             }
             try {
-                val fetchedAt = repository.fetchUpdates()
+                val fetchedAt = repository.fetchUpdates(notify = false)
                 fetchedAt?.let { fetchedAt ->
                     appStateRepository.setLastCheckedTimestamp(fetchedAt)
                 }

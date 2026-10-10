@@ -5,6 +5,7 @@
 
 package com.clover.updater.util
 
+import com.clover.updater.data.OtaCompatibility
 import com.clover.updater.data.Update
 import com.clover.updater.deviceinfo.DeviceInfoUtils
 import java.io.File
@@ -18,7 +19,7 @@ object InstallUtils {
     }.getOrDefault(false)
 
     enum class BlockedReason {
-        NONE, DOWNGRADE, VERSION_UNSUPPORTED
+        NONE, DOWNGRADE, CLEAN_FLASH_REQUIRED, VERSION_UNSUPPORTED
     }
 
     @JvmStatic
@@ -26,6 +27,8 @@ object InstallUtils {
         !DeviceInfoUtils.isDowngradingAllowed &&
                 (update.timestamp < DeviceInfoUtils.buildDateTimestamp ||
                         update.osSdkLevel < DeviceInfoUtils.sdkLevel) -> BlockedReason.DOWNGRADE
+
+        OtaCompatibility.requiresCleanFlash(update) -> BlockedReason.CLEAN_FLASH_REQUIRED
 
         !DeviceInfoUtils.isMajorUpdateAllowed &&
                 update.osSdkLevel > DeviceInfoUtils.sdkLevel -> BlockedReason.VERSION_UNSUPPORTED

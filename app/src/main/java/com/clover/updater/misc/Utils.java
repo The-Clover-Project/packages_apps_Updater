@@ -19,6 +19,7 @@ import com.clover.updater.data.Update;
 import com.clover.updater.data.source.local.UpdatesLocalDataSource;
 import com.clover.updater.data.source.local.UpdatesDatabase;
 import com.clover.updater.deviceinfo.DeviceInfoUtils;
+import com.clover.updater.download.DownloadState;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -135,6 +136,7 @@ public class Utils {
         for (Update update : db.getUpdates()) {
             if (update.getFile() != null) {
                 knownPaths.add(update.getFile().getAbsolutePath());
+                knownPaths.add(DownloadState.stateFile(update.getFile()).getAbsolutePath());
             }
         }
         for (File file : files) {

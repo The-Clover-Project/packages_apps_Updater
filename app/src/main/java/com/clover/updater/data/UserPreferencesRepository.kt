@@ -113,7 +113,7 @@ class UserPreferencesRepository(context: Context) {
     }
 
     val streamUpdatesFlow: Flow<Boolean> = userPreferencesFlow.map { preferences ->
-        preferences[UserPreferencesKeys.STREAM_UPDATES] ?: true
+        preferences[UserPreferencesKeys.STREAM_UPDATES] ?: false
     }
 
     suspend fun getStreamUpdates(): Boolean = streamUpdatesFlow.first()

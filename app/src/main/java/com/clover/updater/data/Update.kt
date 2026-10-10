@@ -5,6 +5,7 @@
 
 package com.clover.updater.data
 
+import com.clover.updater.download.DownloadState
 import java.io.File
 
 data class Update(
@@ -123,7 +124,10 @@ data class Update(
             payloadPropertiesOffset != null && payloadPropertiesSize != null
 
     fun hasFullyDownloadedPackage(): Boolean =
-        file?.let { it.exists() && fileSize > 0 && it.length() >= fileSize } == true
+        file?.let {
+            it.exists() && fileSize > 0 && it.length() >= fileSize &&
+                !DownloadState.isIncomplete(it)
+        } == true
 
     fun hasVerifiedPackage(): Boolean =
         status.hasVerifiedPackage() && file?.exists() == true

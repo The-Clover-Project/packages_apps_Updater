@@ -57,7 +57,7 @@ private fun PreferencesContent(
         batteryMonitor.currentBatteryState
     )
     val autoDelete by repository.autoDeleteFlow.collectAsStateWithLifecycle(true)
-    val streamUpdates by repository.streamUpdatesFlow.collectAsStateWithLifecycle(true)
+    val streamUpdates by repository.streamUpdatesFlow.collectAsStateWithLifecycle(false)
     val checkInterval by repository.checkIntervalFlow.collectAsStateWithLifecycle(CheckInterval.default)
     val meteredNetworkWarning by repository.meteredNetworkWarningFlow.collectAsStateWithLifecycle(
         true

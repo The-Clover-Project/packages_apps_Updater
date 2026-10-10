@@ -20,9 +20,22 @@ class UpdatesNetworkDataSource(private val context: Context) {
             require(base.startsWith("https://")) {
                 "Update server URL must use HTTPS: $base"
             }
+            if (base.contains("{flavour}") && DeviceInfoUtils.flavour.isEmpty()) {
+                throw IOException("Unknown build flavour")
+            }
             return base
                 .replace("{device}", DeviceInfoUtils.device)
                 .replace("{type}", DeviceInfoUtils.releaseType.lowercase())
+                .replace("{flavour}", DeviceInfoUtils.flavour)
+        }
+
+    private val compatibilityUrl: String
+        get() {
+            val url = context.getString(R.string.updater_compatibility_url)
+            require(url.startsWith("https://")) {
+                "Compatibility URL must use HTTPS: $url"
+            }
+            return url
         }
 
     private val client = OkHttpClient.Builder()
@@ -30,19 +43,26 @@ class UpdatesNetworkDataSource(private val context: Context) {
         .followRedirects(false)
         .build()
 
-    fun fetchUpdates(): List<NetworkUpdate> {
+    private fun get(url: String): String? {
         val request = Request.Builder()
-            .url(serverUrl)
+            .url(url)
             .build()
 
-        val responseBody = client.newCall(request).execute().use { response ->
+        return client.newCall(request).execute().use { response ->
+            if (response.code == 404) {
+                return null
+            }
             if (!response.isSuccessful) {
                 throw IOException("Unexpected HTTP status: ${response.code}")
             }
 
             response.body?.string() ?: throw IOException("Empty response body")
         }
-
-        return Json.decodeFromString<List<NetworkUpdate>>(responseBody)
     }
+
+    fun fetchUpdates(): List<NetworkUpdate> =
+        get(serverUrl)?.let { Json.decodeFromString<NetworkUpdatesResponse>(it).response }
+            .orEmpty()
+
+    fun fetchCompatibility(): String? = get(compatibilityUrl)
 }

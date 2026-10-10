@@ -11,6 +11,7 @@ import com.android.settingslib.spa.framework.common.SpaEnvironment
 import com.android.settingslib.spa.framework.common.SpaEnvironmentFactory
 import kotlinx.coroutines.MainScope
 import com.clover.updater.data.AppStateRepository
+import com.clover.updater.data.OtaCompatibility
 import com.clover.updater.data.UpdatesRepository
 import com.clover.updater.data.UserPreferencesRepository
 import com.clover.updater.data.source.local.UpdatesDatabase
@@ -36,6 +37,7 @@ class UpdaterApplication : Application() {
     val userPreferencesRepository by lazy { UserPreferencesRepository(applicationContext) }
     val updatesRepository by lazy {
         UpdatesRepository(
+            context = applicationContext,
             networkMonitor = networkMonitor,
             notificationHelper = notificationHelper,
             networkDataSource = networkDataSource,
@@ -45,6 +47,7 @@ class UpdaterApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        OtaCompatibility.load(applicationContext)
         notificationHelper.setUpNotificationChannels()
         SpaEnvironmentFactory.reset(object : SpaEnvironment(applicationContext) {
             override val pageProviderRepository = lazy {

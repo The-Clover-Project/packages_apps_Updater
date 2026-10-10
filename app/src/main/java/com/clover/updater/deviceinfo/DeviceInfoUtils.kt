@@ -16,8 +16,10 @@ object DeviceInfoUtils : SettingsLibDeviceInfoUtils() {
     private const val PROP_BUILD_DATE = "ro.build.date.utc"
     private const val PROP_BUILD_VERSION = "ro.clover.build.version"
     private const val PROP_DEVICE = "ro.clover.device"
+    private const val PROP_FLAVOUR = "ro.clover.flavour"
     private const val PROP_NEXT_DEVICE = "ro.updater.next_device"
     private const val PROP_RELEASE_TYPE = "ro.clover.releasetype"
+    private const val PROP_VERSION = "ro.clover.version"
     private const val PROP_UPDATER_ALLOW_DOWNGRADING = "clover.updater.allow_downgrading"
     private const val PROP_UPDATE_RECOVERY = "persist.vendor.recovery_update"
 
@@ -31,11 +33,25 @@ object DeviceInfoUtils : SettingsLibDeviceInfoUtils() {
     @JvmStatic
     val buildDateTimestamp: Long = SystemProperties.getLong(PROP_BUILD_DATE, 0)
 
+    private val cloverVersion: String = SystemProperties.get(PROP_VERSION, "")
+
     @JvmStatic
-    val buildVersion: String = SystemProperties.get(PROP_BUILD_VERSION, "")
+    val buildVersion: String = SystemProperties.get(PROP_BUILD_VERSION, "").ifEmpty {
+        Regex("^CloverProject-([^-]+)-\\d{8}").find(cloverVersion)
+            ?.groupValues?.get(1).orEmpty()
+    }
 
     @JvmStatic
     val device: String = SystemProperties.get(PROP_NEXT_DEVICE, SystemProperties.get(PROP_DEVICE))
+
+    @JvmStatic
+    val flavour: String = SystemProperties.get(PROP_FLAVOUR, "").lowercase().ifEmpty {
+        when {
+            cloverVersion.endsWith("-GMS", ignoreCase = true) -> "gms"
+            cloverVersion.endsWith("-VANILLA", ignoreCase = true) -> "vanilla"
+            else -> ""
+        }
+    }
 
     @JvmStatic
     val isABDevice: Boolean = SystemProperties.getBoolean(PROP_AB_DEVICE, false)

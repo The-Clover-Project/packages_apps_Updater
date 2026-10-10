@@ -137,32 +137,32 @@ class UpdateActionHandler(
                             AnnotatedString(activity.getString(R.string.blocked_update_dialog_message_downgrade))
                     }
 
-                    InstallUtils.BlockedReason.VERSION_UNSUPPORTED -> {
-                        title = activity.getString(R.string.blocked_update_dialog_title)
-                        val url = activity.getString(
-                            R.string.blocked_update_info_url,
-                            DeviceInfoUtils.device
-                        )
-                        val messageString = String.format(
-                            StringUtil.getCurrentLocale(activity),
-                            activity.getString(R.string.blocked_update_dialog_message),
+                    InstallUtils.BlockedReason.CLEAN_FLASH_REQUIRED -> {
+                        title = activity.getString(R.string.blocked_update_dialog_title_clean_flash)
+                        val url = blockedUpdateInfoUrl()
+                        message = linkedMessage(
+                            String.format(
+                                StringUtil.getCurrentLocale(activity),
+                                activity.getString(R.string.blocked_update_dialog_message_clean_flash),
+                                update.version,
+                                DeviceInfoUtils.buildVersion,
+                                url
+                            ),
                             url
                         )
-                        message = buildAnnotatedString {
-                            append(messageString)
-                            val urlStart = messageString.indexOf(url)
-                            if (urlStart != -1) {
-                                val urlEnd = urlStart + url.length
-                                addStyle(
-                                    style = SpanStyle(
-                                        textDecoration = TextDecoration.Underline
-                                    ),
-                                    start = urlStart,
-                                    end = urlEnd
-                                )
-                                addLink(LinkAnnotation.Url(url), urlStart, urlEnd)
-                            }
-                        }
+                    }
+
+                    InstallUtils.BlockedReason.VERSION_UNSUPPORTED -> {
+                        title = activity.getString(R.string.blocked_update_dialog_title)
+                        val url = blockedUpdateInfoUrl()
+                        message = linkedMessage(
+                            String.format(
+                                StringUtil.getCurrentLocale(activity),
+                                activity.getString(R.string.blocked_update_dialog_message),
+                                url
+                            ),
+                            url
+                        )
                     }
 
                     InstallUtils.BlockedReason.NONE -> return
@@ -185,13 +185,7 @@ class UpdateActionHandler(
             UpdateActionType.EXPORT -> exportUpdate(update)
 
             UpdateActionType.OPEN_GUIDE -> activity.startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    activity.getString(
-                        R.string.blocked_update_info_url,
-                        DeviceInfoUtils.device,
-                    ).toUri(),
-                )
+                Intent(Intent.ACTION_VIEW, blockedUpdateInfoUrl().toUri())
             )
 
             UpdateActionType.VIEW_DOWNLOADS -> activity.startActivity(
@@ -206,6 +200,25 @@ class UpdateActionHandler(
 
             UpdateActionType.REBOOT ->
                 activity.getSystemService(PowerManager::class.java).reboot(null)
+        }
+    }
+
+    private fun blockedUpdateInfoUrl() =
+        activity.getString(R.string.blocked_update_info_url, DeviceInfoUtils.device)
+
+    private fun linkedMessage(text: String, url: String) = buildAnnotatedString {
+        append(text)
+        val urlStart = text.indexOf(url)
+        if (urlStart != -1) {
+            val urlEnd = urlStart + url.length
+            addStyle(
+                style = SpanStyle(
+                    textDecoration = TextDecoration.Underline
+                ),
+                start = urlStart,
+                end = urlEnd
+            )
+            addLink(LinkAnnotation.Url(url), urlStart, urlEnd)
         }
     }
 

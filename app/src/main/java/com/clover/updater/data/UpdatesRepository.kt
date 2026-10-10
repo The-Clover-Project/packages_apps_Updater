@@ -5,6 +5,7 @@
 
 package com.clover.updater.data
 
+import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,6 +15,7 @@ import com.clover.updater.data.source.local.UpdatesLocalDataSource
 import com.clover.updater.data.source.network.UpdatesNetworkDataSource
 import com.clover.updater.data.source.network.toUpdate
 import com.clover.updater.deviceinfo.DeviceInfoUtils
+import com.clover.updater.download.DownloadState
 import com.clover.updater.notifications.NotificationHelper
 import com.clover.updater.util.NetworkMonitor
 import java.io.IOException
@@ -21,6 +23,7 @@ import java.io.IOException
 private const val TAG = "UpdatesRepository"
 
 class UpdatesRepository(
+    private val context: Context,
     private val networkMonitor: NetworkMonitor,
     private val notificationHelper: NotificationHelper,
     private val networkDataSource: UpdatesNetworkDataSource,
@@ -37,8 +40,18 @@ class UpdatesRepository(
      * @throws IOException on network or HTTP errors.
      * @throws SerializationException if the response cannot be parsed.
      */
-    suspend fun fetchUpdates(): Long? {
+    suspend fun fetchUpdates(notify: Boolean = true): Long? {
         if (!networkMonitor.currentNetworkState.isOnline) return null
+
+        withContext(Dispatchers.IO) {
+            try {
+                networkDataSource.fetchCompatibility()?.let {
+                    OtaCompatibility.update(context, it)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Could not update compatibility data, using cached data", e)
+            }
+        }
 
         val networkUpdates = withContext(Dispatchers.IO) {
             networkDataSource.fetchUpdates().map { it.toUpdate() }.filter { filterUpdates(it) }
@@ -52,7 +65,7 @@ class UpdatesRepository(
             localDataSource.getUpdates()
         }.associateBy { it.downloadId }
 
-        if (localUpdates.isNotEmpty() && networkUpdates.any { it.downloadId !in localUpdates }) {
+        if (notify && networkUpdates.any { it.downloadId !in localUpdates }) {
             notificationHelper.showNewUpdatesNotification()
         }
 
@@ -75,6 +88,7 @@ class UpdatesRepository(
                         it.downloadUrl != null
             }.forEach {
                 it.file?.delete()
+                DownloadState.delete(it.file)
                 localDataSource.removeUpdate(it.downloadId)
             }
         }

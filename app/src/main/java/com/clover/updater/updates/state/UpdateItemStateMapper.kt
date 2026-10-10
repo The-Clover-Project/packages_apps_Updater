@@ -13,6 +13,7 @@ import com.clover.updater.controller.UpdaterController
 import com.clover.updater.data.Update
 import com.clover.updater.data.UpdateStatus
 import com.clover.updater.deviceinfo.DeviceInfoUtils
+import com.clover.updater.download.DownloadState
 import com.clover.updater.updates.action.UpdateAction
 import com.clover.updater.updates.action.UpdateActionType
 import com.clover.updater.updates.action.UpdateActions
@@ -190,6 +191,7 @@ class UpdateItemStateMapper(
             } ?: "",
             installNote = when (state.installBlockedReason) {
                 InstallUtils.BlockedReason.DOWNGRADE -> R.string.list_downgrade_blocked
+                InstallUtils.BlockedReason.CLEAN_FLASH_REQUIRED -> R.string.list_clean_flash_required
                 InstallUtils.BlockedReason.VERSION_UNSUPPORTED -> R.string.list_major_upgrade_recovery_install
                 InstallUtils.BlockedReason.NONE -> R.string.list_full_install
             },
@@ -199,7 +201,10 @@ class UpdateItemStateMapper(
     }
 
     private fun downloadedSize(update: Update): String {
-        val downloaded = Formatter.formatShortFileSize(context, update.file?.length() ?: 0L)
+        val downloaded = Formatter.formatShortFileSize(
+            context,
+            DownloadState.downloadedBytes(update.file),
+        )
         val total = Formatter.formatShortFileSize(context, update.fileSize)
 
         return context.getString(R.string.list_download_progress_newer, downloaded, total)

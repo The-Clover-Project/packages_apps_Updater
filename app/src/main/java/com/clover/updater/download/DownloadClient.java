@@ -58,8 +58,10 @@ public interface DownloadClient {
             } else if (mCallback == null) {
                 throw new IllegalStateException("No download callback defined");
             }
-            return new HttpURLConnectionClient(mUrl, mDestination, mProgressListener, mCallback,
-                    mUseDuplicateLinks);
+            DownloadClient single = new HttpURLConnectionClient(mUrl, mDestination,
+                    mProgressListener, mCallback, mUseDuplicateLinks);
+            return new ParallelDownloadClient(mUrl, mDestination, mProgressListener, mCallback,
+                    single);
         }
 
         public Builder setUrl(String url) {

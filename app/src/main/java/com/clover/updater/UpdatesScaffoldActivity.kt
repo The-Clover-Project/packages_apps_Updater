@@ -278,7 +278,7 @@ private fun UpdatesActionPane(
     val userPreferencesRepository =
         remember { (context.applicationContext as UpdaterApplication).userPreferencesRepository }
     val streamUpdatesEnabled by userPreferencesRepository.streamUpdatesFlow.collectAsState(
-        initial = true,
+        initial = false,
     )
 
     val updateItems = remember(

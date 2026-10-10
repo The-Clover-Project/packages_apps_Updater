@@ -12,38 +12,30 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonIgnoreUnknownKeys
 import com.clover.updater.data.Update
+import com.clover.updater.deviceinfo.DeviceInfoUtils
 import com.clover.updater.misc.Constants
-
-// Commented out fields below are available in production, but not needed in runtime.
-// If you wish to uncomment any of them, please update the README.md to indicate that.
 
 @Suppress("PROVIDED_RUNTIME_TOO_LOW")
 @Serializable
 @JsonIgnoreUnknownKeys
-data class NetworkUpdate(
-    // @SerialName("date") val date: String,
-    @SerialName("datetime") val datetime: Long,
-    @SerialName("files") val files: List<NetworkUpdateFile>,
-    @SerialName("type") val type: String,
-    @SerialName("version") val version: String,
+data class NetworkUpdatesResponse(
+    @SerialName("response") val response: List<NetworkUpdate>,
 )
 
 @Suppress("PROVIDED_RUNTIME_TOO_LOW")
 @Serializable
 @JsonIgnoreUnknownKeys
-data class NetworkUpdateFile(
-    // @SerialName("date") val date: String? = null,
-    // @SerialName("datetime") val datetime: Long? = null,
+data class NetworkUpdate(
+    @SerialName("datetime") val datetime: Long,
     @SerialName("filename") val filename: String,
-    // @SerialName("filepath") val filepath: String,
+    @SerialName("id") val id: String,
     @SerialName("os_patch_level") val osPatchLevel: String? = null,
     @SerialName("os_sdk_level") val osSdkLevel: Int? = null,
     @SerialName("ota_property_files") val otaPropertyFiles: String? = null,
-    // @SerialName("sha1") val sha1: String,
-    @SerialName("sha256") val sha256: String,
+    @SerialName("romtype") val romtype: String,
     @SerialName("size") val size: Long,
-    // @SerialName("type") val type: String? = null,
     @SerialName("url") val url: String,
+    @SerialName("version") val version: String,
 )
 
 private data class PackageFileRange(
@@ -52,31 +44,30 @@ private data class PackageFileRange(
 )
 
 private fun String.parsePackageFileRanges() =
-    split(",").associate { token ->
+    split(",").mapNotNull { token ->
         val parts = token.trim().split(":")
-        parts[0].trim() to PackageFileRange(
-            offset = parts[1].trim().toLong(),
-            size = parts[2].trim().toLong(),
-        )
-    }
+        if (parts.size < 3) return@mapNotNull null
+        val offset = parts[1].trim().toLongOrNull() ?: return@mapNotNull null
+        val size = parts[2].trim().toLongOrNull() ?: return@mapNotNull null
+        parts[0].trim() to PackageFileRange(offset, size)
+    }.toMap()
 
 fun NetworkUpdate.toUpdate(): Update {
-    val file = files[0]
-    val packageFileRanges = file.otaPropertyFiles?.parsePackageFileRanges().orEmpty()
+    val packageFileRanges = otaPropertyFiles?.parsePackageFileRanges().orEmpty()
     val payloadMetadataRange = packageFileRanges[Constants.AB_PAYLOAD_METADATA_PATH]
     val payloadRange = packageFileRanges[Constants.AB_PAYLOAD_BIN_PATH]
     val payloadPropertiesRange = packageFileRanges[Constants.AB_PAYLOAD_PROPERTIES_PATH]
 
     return Update(
-        downloadId = file.sha256,
-        name = file.filename,
+        downloadId = id,
+        name = filename,
         timestamp = datetime,
-        type = type,
-        fileSize = file.size,
-        downloadUrl = file.url,
+        type = romtype,
+        fileSize = size,
+        downloadUrl = url,
         version = version,
-        osPatchLevel = file.osPatchLevel,
-        osSdkLevel = file.osSdkLevel ?: 0,
+        osPatchLevel = osPatchLevel,
+        osSdkLevel = osSdkLevel ?: DeviceInfoUtils.sdkLevel,
         payloadMetadataOffset = payloadMetadataRange?.offset,
         payloadMetadataSize = payloadMetadataRange?.size,
         payloadOffset = payloadRange?.offset,
